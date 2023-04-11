@@ -3,6 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useState,useEffect } from 'react';
+import dynamic from 'next/dynamic'
+const DynamicComponentWithNoSSR = dynamic(
+    () => import('../src/components/NavBar'),
+    { ssr: false }
+  )
 const AddPost = () =>
 {
     const [imageFile,setImageFile] = useState(null)
@@ -19,8 +24,10 @@ const AddPost = () =>
         // console.log(e.target.files[0])
     }
     return(
+        <>
+        <DynamicComponentWithNoSSR></DynamicComponentWithNoSSR>
         <div className='add_post_container'>
-            <div className="text-center" id='post_image'>
+            <div className="text-center" id='post_image' fluid>
                 <Image src={imageFile} rounded thumbnail fluid></Image>
             </div>
             <div className="d-grid gap-2">
@@ -67,6 +74,7 @@ const AddPost = () =>
                 </Form>
             </div>
         </div>
+        </>
     )
 }
 export default AddPost
