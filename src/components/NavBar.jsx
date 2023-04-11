@@ -6,8 +6,9 @@ import { useState } from 'react';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Button } from 'bootstrap';
 import Link from 'next/link'
-function NavigationBarComonent()
+function NavigationBarComonent(props)
 {
+    console.log(props.hello)
     const [showMenu,setShowMenu] = useState(false)
     const menuHandle = () =>
     {
@@ -33,7 +34,7 @@ function NavigationBarComonent()
                                         <Nav.Link href='/'><HouseExclamationFill title='Go home'></HouseExclamationFill> Home</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link href='/order'><CartCheck></CartCheck> Order</Nav.Link>
+                                        <Nav.Link><Link href={{pathname:'/order',query: { name: 'test' },}} ><CartCheck></CartCheck> Order</Link></Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
                                         <Nav.Link href='/config'><GearWide></GearWide> Config</Nav.Link>

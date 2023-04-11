@@ -3,7 +3,6 @@ import Card from 'react-bootstrap/Card';
 import {PencilFill} from 'react-bootstrap-icons'
 import Accordion from 'react-bootstrap/Accordion';
 function Cart(props) {
-    console.log(props.name)
   return (
     <div className='cartContainer'>
         <Card>

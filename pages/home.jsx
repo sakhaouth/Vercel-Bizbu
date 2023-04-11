@@ -7,7 +7,11 @@ import Container from 'react-bootstrap/Container';
 import AddCart from "./addCart";
 import {List} from 'react-bootstrap-icons'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-
+import dynamic from 'next/dynamic'
+const DynamicComponentWithNoSSR = dynamic(
+    () => import('../src/components/NavBar'),
+    { ssr: false }
+  )
 function Home()
 {
     const [val,setVal] = useState('')
@@ -32,6 +36,7 @@ function Home()
     }
     return(
         <>
+            <DynamicComponentWithNoSSR></DynamicComponentWithNoSSR>
             <div className="mainContainer">
                 <Form className="serachBarContainer">
                     
