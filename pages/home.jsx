@@ -55,7 +55,7 @@ function Home()
                     <Row className="justify-content-md-center" lg={4} id="productRow">
                         {
                             n.map((x) => {
-                                return (<Col><Cart></Cart></Col>)
+                                return (<Col key='ss'><Cart></Cart></Col>)
                             })
                         }
                         <Col><AddCart></AddCart></Col>
