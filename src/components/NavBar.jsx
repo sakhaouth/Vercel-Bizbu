@@ -16,7 +16,7 @@ function NavigationBarComonent(props)
     }
     return (
         <div>
-            <Navbar bg='light' expand = 'lg'>
+            <Navbar bg='light' expand = 'lg' fixed='top'>
                 <Container fluid>
                     <Nav>
                         <Nav.Item>
@@ -29,9 +29,9 @@ function NavigationBarComonent(props)
                         </Offcanvas.Header>
                         <Offcanvas.Body>
                             <Container fluid>
-                                <Nav fill variant="tabs" defaultActiveKey="/home">
+                                <Nav fill variant="tabs" defaultActiveKey="/home" >
                                     <Nav.Item>
-                                        <Nav.Link href='/'><HouseExclamationFill title='Go home'></HouseExclamationFill> Home</Nav.Link>
+                                        <Nav.Link href='/home'><HouseExclamationFill title='Go home'></HouseExclamationFill> Home</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
                                         <Nav.Link><Link href={{pathname:'/order',query: { name: 'test' },}} ><CartCheck></CartCheck> Order</Link></Nav.Link>

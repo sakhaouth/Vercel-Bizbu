@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import {PlusCircle} from 'react-bootstrap-icons'
 import Router, { withRouter } from 'next/router'
+
 function AddCart() {
   const addProduct = (e) =>
   {

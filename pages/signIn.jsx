@@ -3,13 +3,26 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useState,useEffect } from 'react';
+import { Link} from 'react-bootstrap-icons';
+import Router, { withRouter } from 'next/router'
+// import Cookies from 'js-cookie';
+import Spinner from 'react-bootstrap/Spinner';
+// import Cookies from 'universal-cookie';
+// import cookieCutter from 'cookie-cutter'
+import PUBLIC from './values';
+// import LOCAL from './values';
+import { getCookies, setCookie, deleteCookie } from 'cookies-next';
 const SingIn = () =>
 {
+    const [loading,setLoading] = useState(false)
+    const [message,setMessage] = useState()
+    const [isMessage,setIsMessage] = useState(false)
     const [data,setData] = useState({
         email : '',
         password : ''
 
     })
+    
     const emailChaned = (e) =>
     {
         const value = e.target.value
@@ -30,28 +43,45 @@ const SingIn = () =>
     {
         e.preventDefault();
         e.stopPropagation();
-        console.log(data)
-        const url = 'http://localhost:8000/bizbud/signin'
+        // console.log(data)
+        // http://localhost:8000
+        setLoading(true)
+        const url = PUBLIC + '/bizbud/signin'
+        // const url = LOCAL + '/bizbud/signin'
         const rawResponse  = await fetch(url, {
             method: 'POST',
             body: JSON.stringify(data),
+            credentials: 'include',
             headers: {
-              'Content-Type': 'application/json'
-              
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
             }
+            // mode : 'cors',
+            
             
           })
         
-        // const content = await rawResponse.json();
-        console.log(rawResponse)
+        const res = await rawResponse.json();
+        console.log('here is cookie')
+        console.log(getCookies())
+        //          to be opened
+        if(res['status'] === 'ok')
+        {
+            console.log('completed')
+            Router.push('/mainContainer');
+        }
 
+        console.log(res)
+        setMessage(res['status'])
+        setIsMessage(true)
+        setLoading(false)
     }
     return(
         <div className='sign_in_container'>
             <div className='textPart'>
                 <b><span>Log In for Shop Owner</span></b>
             </div>
-        <Form>
+        <Form onSubmit={formSubmit}>
             <FloatingLabel
                 controlId="floatingInput"
                 label="Email Address"
@@ -66,8 +96,16 @@ const SingIn = () =>
             >
                 <Form.Control type='password' placeholder="Password" required onChange={passChaned}/>
             </FloatingLabel>
-            <Button type='Sign In' onClick={formSubmit}>Submit</Button>
+
+            {isMessage ? (<p className='normal'>*{message}</p>) : null}
+
+            {!loading ? (<Button type='submit'>LogIn</Button>) : (<Button disabled><Spinner animation='grow'></Spinner> Loading...</Button>)}
         </Form>
+        <div className='forup'>
+            <p>Are you new? <a href='/signUp'>Sign up</a> </p>
+            
+        </div>
+        
     </div>
     )
 }

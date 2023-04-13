@@ -3,9 +3,16 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useState,useEffect } from 'react';
+import { Alert } from 'react-bootstrap';
+import Router from 'next/router';
+import Spinner from 'react-bootstrap/Spinner';
+import PUBLIC from './values';
 const SignUp = () =>
 {
     const [imageFile,setImageFile] = useState(null)
+    const [message,setMessage] = useState()
+    const [isMessage,setIsMessage] = useState(false)
+    const [loading,setLoading] = useState(false)
     const [data,setData] = useState({
         name : '',
         email : '',
@@ -15,11 +22,49 @@ const SignUp = () =>
         address : ''
 
     })
-    const formSubmit = (e) =>
+    
+    const formSubmit = async(e) =>
     {
+        // setIsLoading(true)
         e.preventDefault();
         e.stopPropagation();
+        
+        if (data['password'] != data['re_password'])
+        {
+            setMessage('password doesn\'t match')
+            setIsMessage(true)
+            return
+        }
         console.log(data)
+        
+        setLoading(true)
+        // const url = 'http://localhost:8000/bizbud/signup'
+        const url = PUBLIC + '/bizbud/signup'
+            const rawResponse  = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            }
+            // mode : 'cors',
+            
+            
+          })
+        
+        const res = await rawResponse.json();
+        if (res['status'] == 'ok')
+        {
+            console.log('I am')
+            Router.push('/signIn')
+        }
+        else
+        {
+            setMessage(res['status'])
+            setIsMessage(true)
+        }
+        setLoading(false)
     }
     const nameChaned = (e) =>
     {
@@ -82,10 +127,10 @@ const SignUp = () =>
         {
             setImageFile(null)
         }
+        
         const objectUrl = URL.createObjectURL(e.target.files[0])
         setImageFile(objectUrl)
         
-        // console.log(e.target.files[0])
     }
     
     return(
@@ -93,10 +138,11 @@ const SignUp = () =>
             <div className='textPart'>
                 <b><span>Sing Up User</span></b>
             </div>
+            
             <div className="text-center" id='post_image' fluid>
                 <Image src={imageFile} rounded thumbnail fluid></Image>
             </div>
-            <div className="d-grid gap-2">
+            <div>
             
                 <Form onSubmit={formSubmit}>
                     <Form.Group controlId="formFile" className="mb-3">
@@ -146,12 +192,18 @@ const SignUp = () =>
                     <Form.Control value={data['address']} type='text' placeholder="address" required onChange={addressChaned}/>
                     </FloatingLabel>
                     
+                    {isMessage ? (<p className='normal'>*{message}</p>) : null}
                     
                     
                     
                     
-                    <Button type='submit'>Sign Up</Button>
+                    {!loading ? (<Button type='submit'>Sign Up</Button>) : (<Button disabled><Spinner></Spinner>  Loading...</Button>)}
                 </Form>
+                
+                
+            </div>
+            <div className='forup'>
+                <p>Have an account? <a href='/signIn'>Sign In</a> </p>
             </div>
         </div>
     )
