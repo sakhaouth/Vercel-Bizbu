@@ -95,8 +95,8 @@ function Home(params)
                     <Row className="justify-content-md-center" lg={4} id="productRow">
                         {
                             post.map((x) => {
-                                // return (<Col><Cart name = {x.product_name} price = {x.product_price} description = {x.product_description}></Cart></Col>)
-                                console.log(x)
+                                return (<Col key = {x.product_name}><Cart name = {x.product_name} price = {x.product_price} description = {x.product_description}></Cart></Col>)
+                                // console.log(x)
                             })
                         }
                         
