@@ -9,11 +9,12 @@ import Router, { withRouter } from 'next/router'
 import Spinner from 'react-bootstrap/Spinner';
 // import Cookies from 'universal-cookie';
 // import cookieCutter from 'cookie-cutter'
-import PUBLIC from './values';
+// import PUBLIC from './values';
 // import LOCAL from './values';
 import { getCookies, setCookie, deleteCookie } from 'cookies-next';
 const SingIn = () =>
 {
+    const PUBLIC = process.env.PUBLIC
     const [loading,setLoading] = useState(false)
     const [message,setMessage] = useState()
     const [isMessage,setIsMessage] = useState(false)
@@ -102,7 +103,7 @@ const SingIn = () =>
             {!loading ? (<Button type='submit'>LogIn</Button>) : (<Button disabled><Spinner animation='grow'></Spinner> Loading...</Button>)}
         </Form>
         <div className='forup'>
-            <p>Are you new? <a href='/signUp'>Sign up</a> </p>
+            <p>Are you new? <dev onClick={(e) => {Router.push('/signUp')}}><u>Sign up</u></dev> </p>
             
         </div>
         

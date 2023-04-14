@@ -6,9 +6,10 @@ import { useState,useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Truck } from 'react-bootstrap-icons';
 import Spinner from 'react-bootstrap/Spinner'
-import PUBLIC from './values';
+// import PUBLIC from './values';
 function Config()
 {
+    const PUBLIC = process.env.PUBLIC
     const [isExist,setIsExist] = useState(false)
     const [message,setMessage] = useState()
     const [isMessage,setIsMessage] = useState(false)
@@ -25,36 +26,7 @@ function Config()
         "address" : ""
     })
     
-    const fu = async () => {
-        setLoading(true)
-        // let url = 'http://localhost:8000/bizbud/addshop'
-        let url = PUBLIC + '/bizbud/addshop'
-        
-             const response = await fetch(url, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                'Content-Type': 'application/json'
-                
-                }
-                
-            })
-            console.log('kooooooi')
-            const info = await response.json()
-            // setMessage(res['status'])
-            if(info['status'] === 'ok' )
-            {
-                console.log('here im')
-                // setMessage('saved')
-                setData(info['object'])
-                // setData(prevData => ({...prevData,['shopName'] : odata['shopName']} ))
-                setIsExist(true)
-            }
-            setLoading(false)
-            
-            // setIsMessage(true)
-            // setIsExist(false)
-    }
+    
     const formSubmit = async(e) =>
     {
         e.preventDefault();
@@ -116,8 +88,38 @@ function Config()
     }
     useEffect(() => {
         console.log('kirreeeeeeeeeeeee')
+        const fu = async () => {
+            setLoading(true)
+            // let url = 'http://localhost:8000/bizbud/addshop'
+            let url = PUBLIC + '/bizbud/addshop'
+            
+                 const response = await fetch(url, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                    'Content-Type': 'application/json'
+                    
+                    }
+                    
+                })
+                console.log('kooooooi')
+                const info = await response.json()
+                // setMessage(res['status'])
+                if(info['status'] === 'ok' )
+                {
+                    console.log('here im')
+                    // setMessage('saved')
+                    setData(info['object'])
+                    // setData(prevData => ({...prevData,['shopName'] : odata['shopName']} ))
+                    setIsExist(true)
+                }
+                setLoading(false)
+                
+                // setIsMessage(true)
+                // setIsExist(false)
+        }
         fu()
-    },[])
+    },[PUBLIC])
     return(
         <>
             <div className="addShopForm">

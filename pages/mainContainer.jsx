@@ -16,9 +16,10 @@ import { setConfig } from 'next/config';
 import AddPost from './addPost';
 import UserProfile from './profile';
 import Spinner  from 'react-bootstrap/Spinner';
-import PUBLIC from './values'
+// import PUBLIC from './values'
 const MainCOntainer = () =>
 {
+    const PUBLIC = process.env.PUBLIC
     const router = useRouter()
     const info = router.query
     console.log('what is my name ' + info.shop_name)

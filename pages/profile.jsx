@@ -5,10 +5,11 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useState,useEffect } from 'react';
 import { useRouter } from 'next/router'
 import Spinner from 'react-bootstrap/Spinner'
-import PUBLIC from './values'
+// import PUBLIC from './values'
 // import LOCAL from './values'
 function UserProfile()
 {
+    const PUBLIC = process.env.PUBLIC
     const router = useRouter()
     const [loading,setLoading] = useState(false)
     // const data = router.query
@@ -51,7 +52,7 @@ function UserProfile()
         <>
             <div className='profileView'>
             <div className="text-center" id='post_image' fluid>
-                <Image src={imageFile} rounded thumbnail fluid roundedCircle></Image>
+                <Image alt='user_image' src={imageFile} rounded thumbnail fluid roundedCircle></Image>
             </div>
             <Form>
                     <FloatingLabel

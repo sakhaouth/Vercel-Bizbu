@@ -6,9 +6,10 @@ import { useState,useEffect } from 'react';
 import { Alert } from 'react-bootstrap';
 import Router from 'next/router';
 import Spinner from 'react-bootstrap/Spinner';
-import PUBLIC from './values';
+// import PUBLIC from './values';
 const SignUp = () =>
 {
+    const PUBLIC = process.env.PUBLIC
     const [imageFile,setImageFile] = useState(null)
     const [message,setMessage] = useState()
     const [isMessage,setIsMessage] = useState(false)
@@ -140,7 +141,7 @@ const SignUp = () =>
             </div>
             
             <div className="text-center" id='post_image' fluid>
-                <Image src={imageFile} rounded thumbnail fluid></Image>
+                <Image alt='user_image' src={imageFile} rounded thumbnail fluid></Image>
             </div>
             <div>
             
@@ -203,7 +204,7 @@ const SignUp = () =>
                 
             </div>
             <div className='forup'>
-                <p>Have an account? <a href='/signIn'>Sign In</a> </p>
+                <p>Have an account? <dev onClick={(e) => {Router.push('/signIn')}}>,<u>Sign In</u></dev></p> 
             </div>
         </div>
     )

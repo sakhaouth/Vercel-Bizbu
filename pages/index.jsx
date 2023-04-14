@@ -7,12 +7,13 @@ import MainCOntainer from "./mainContainer"
 import { useCookies } from "react-cookie"
 import MySpinner from "./load"
 import Router from "next/router"
-import PUBLIC from './values'
+// import PUBLIC from './values'
 // import LOCAL from './values'
 function Index()
 {
     // console.log('my value')
     // console.log(PUBLIC)
+    const PUBLIC = process.env.PUBLIC
     const [isLoading,setIsLoading] = useState(false)
     const [value,setValue] = useState(0)
     const [shopName,setShopName] = useState({})

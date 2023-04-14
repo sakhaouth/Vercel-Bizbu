@@ -7,9 +7,9 @@ import Alert from 'react-bootstrap/Alert';
 import Toast from 'react-bootstrap/Toast';
 import dynamic from 'next/dynamic'
 import Spinner from 'react-bootstrap/Spinner';
-import PUBLIC from './values'
 const AddPost = () =>
 {
+    const PUBLIC = process.env.PUBLIC
     const [data,setData] = useState({
         "product_name" : "",
         "status":"",
@@ -81,7 +81,7 @@ const AddPost = () =>
         <>
         <div className='add_post_container'>
             <div className="text-center" id='post_image' fluid>
-                <Image src={imageFile} rounded thumbnail fluid></Image>
+                <Image src={imageFile} alt='product_image' rounded thumbnail fluid></Image>
             </div>
             <div className="d-grid gap-2">
                 <Form onSubmit={formHandle}>

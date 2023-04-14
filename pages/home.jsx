@@ -11,9 +11,10 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import MySpinner from "./load";
 import Spinner from 'react-bootstrap/Spinner';
-import PUBLIC from "./values";
+// import PUBLIC from "./values";
 function Home(params)
 {   
+    const PUBLIC = process.env.PUBLIC
     const router = useRouter()
     const info = router.query
     console.log('here show -> '+ info.shop_name)
@@ -94,7 +95,8 @@ function Home(params)
                     <Row className="justify-content-md-center" lg={4} id="productRow">
                         {
                             post.map((x) => {
-                                return (<Col><Cart name = {x['product_name']} price = {x["product_price"]} description = {x["product_description"]}></Cart></Col>)
+                                // return (<Col><Cart name = {x.product_name} price = {x.product_price} description = {x.product_description}></Cart></Col>)
+                                Console.log(x)
                             })
                         }
                         
