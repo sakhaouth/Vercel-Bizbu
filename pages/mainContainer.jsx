@@ -20,6 +20,7 @@ import Spinner  from 'react-bootstrap/Spinner';
 const MainCOntainer = () =>
 {
     const PUBLIC = process.env.PUBLIC
+    console.log('container come')
     const router = useRouter()
     const info = router.query
     console.log('what is my name ' + info.shop_name)

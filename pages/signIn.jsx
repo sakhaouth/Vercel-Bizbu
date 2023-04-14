@@ -56,8 +56,8 @@ const SingIn = () =>
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
-            }
-            // mode : 'cors',
+            },
+            mode : 'cors'
             
             
           })
