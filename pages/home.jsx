@@ -96,7 +96,7 @@ function Home(params)
                         {
                             post.map((x) => {
                                 // return (<Col><Cart name = {x.product_name} price = {x.product_price} description = {x.product_description}></Cart></Col>)
-                                Console.log(x)
+                                console.log(x)
                             })
                         }
                         
