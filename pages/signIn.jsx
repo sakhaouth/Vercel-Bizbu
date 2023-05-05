@@ -5,15 +5,13 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useState,useEffect } from 'react';
 import { Link} from 'react-bootstrap-icons';
 import Router, { withRouter } from 'next/router'
-// import Cookies from 'js-cookie';
+import cookie from 'js-cookie';
 import Spinner from 'react-bootstrap/Spinner';
-// import Cookies from 'universal-cookie';
-// import cookieCutter from 'cookie-cutter'
-// import PUBLIC from './values';
-// import LOCAL from './values';
+import axios from 'axios';
 import { getCookies, setCookie, deleteCookie } from 'cookies-next';
-const SingIn = () =>
+const SingIn = ({}) =>
 {
+    // console.log('okkkkk')
     const PUBLIC = process.env.PUBLIC
     const [loading,setLoading] = useState(false)
     const [message,setMessage] = useState()
@@ -49,20 +47,22 @@ const SingIn = () =>
         setLoading(true)
         const url = PUBLIC + '/bizbud/signin'
         // const url = LOCAL + '/bizbud/signin'
-        const rawResponse  = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-            },
-            mode : 'cors'
+        // const rawResponse  = await fetch(url, {
+        //     method: 'POST',
+        //     body: JSON.stringify(data),
+        //     credentials: "include",
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //       'Accept': 'application/json',
+        //     },
+        //     mode : 'cors'
             
             
-          })
-        
-        const res = await rawResponse.json();
+        //   })
+        const rawResponse = axios.post(url,data,{withCredentials:true})
+        const res = (await rawResponse).data
+        // console.log('interesting value')
+        // console.log(rawResponse.cookies)
         console.log('here is cookie')
         console.log(getCookies())
         //          to be opened
@@ -71,7 +71,7 @@ const SingIn = () =>
             console.log('completed')
             Router.push('/mainContainer');
         }
-
+        cookie.set('id',data.email,{expires : 1/24})
         console.log(res)
         setMessage(res['status'])
         setIsMessage(true)
@@ -110,4 +110,11 @@ const SingIn = () =>
     </div>
     )
 }
+export async function getServerSideProps({req,res}) {
+    console.log(req.cookies.sessionid)
+    console.log('tar agey')
+    return {
+      props: {}, // will be passed to the page component as props
+    }
+  }
 export default SingIn

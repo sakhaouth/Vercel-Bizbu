@@ -16,6 +16,7 @@ import { setConfig } from 'next/config';
 import AddPost from './addPost';
 import UserProfile from './profile';
 import Spinner  from 'react-bootstrap/Spinner';
+import cookie from 'js-cookie';
 // import PUBLIC from './values'
 const MainCOntainer = () =>
 {
@@ -76,6 +77,7 @@ const MainCOntainer = () =>
         {
             Router.push({ pathname: '/signIn' });
         }
+        cookie.remove('id')
         setOutLoading(false)
     }
     

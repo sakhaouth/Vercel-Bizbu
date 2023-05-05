@@ -12,6 +12,7 @@ import { useRouter } from 'next/router'
 import MySpinner from "./load";
 import Spinner from 'react-bootstrap/Spinner';
 // import PUBLIC from "./values";
+import axios from "axios";
 function Home(params)
 {   
     const PUBLIC = process.env.PUBLIC
@@ -39,16 +40,17 @@ function Home(params)
         // console.log('ahei na')
         // console.log(params.shop_name)
         // console.log(url)
-             const response = await fetch(url, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                'Content-Type': 'application/json'
+            //  const response = await fetch(url, {
+            //     method: 'GET',
+            //     credentials: 'include',
+            //     headers: {
+            //     'Content-Type': 'application/json'
                 
-                }
+            //     }
                 
-            })
-            const info = await response.json()
+            // })
+            const response = axios.get(url,{withCredentials:true})
+            const info = (await response).data
             if(info['status'] == 'ok')
             {
                 console.log(info['object'])
