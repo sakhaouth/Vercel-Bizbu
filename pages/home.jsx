@@ -18,7 +18,7 @@ function Home(params)
     const PUBLIC = process.env.PUBLIC
     const router = useRouter()
     const info = router.query
-    console.log('here show -> '+ info.shop_name)
+    console.log('here show -> '+ params.type)
     const [val,setVal] = useState('')
     const onSearch = (e) =>
     {
@@ -28,27 +28,24 @@ function Home(params)
     const n = [5,7,6,5,58,4,7,4,8,8,7,3,7,9,1]
     const [post,setPost] = useState([])
     const fu = async () => {
+        console.log('herer i m tell me')
         setIsLoading(true)
         
         // let url = 'http://localhost:8000/bizbud/addshop'
         
         // let url = 'http://localhost:8000/bizbud/getposts'
-        let url = PUBLIC + '/bizbud/getposts'
-        // const param = URLSearchParams(info.shop_name)
-        // url += param
-
-        // console.log('ahei na')
-        // console.log(params.shop_name)
-        // console.log(url)
-            //  const response = await fetch(url, {
-            //     method: 'GET',
-            //     credentials: 'include',
-            //     headers: {
-            //     'Content-Type': 'application/json'
-                
-            //     }
-                
-            // })
+        let url = ''
+        if (params.type === 'user')
+        {
+            console.log('user typing')
+            url = PUBLIC + '/bizbud/getproductstobuy'
+        }
+        else
+        {
+            console.log('owner typing')
+            url = PUBLIC + '/bizbud/getposts'
+        }
+        
             const response = axios.get(url,{withCredentials:true})
             const info = (await response).data
             if(info['status'] == 'ok')
@@ -97,7 +94,7 @@ function Home(params)
                     <Row className="justify-content-md-center" lg={4} id="productRow">
                         {
                             post.map((x) => {
-                                return (<Col key = {x.product_name}><Cart name = {x.product_name} price = {x.product_price} description = {x.product_description}></Cart></Col>)
+                                return (<Col key = {x.product_name}><Cart name = {x.product_name} price = {x.product_price} description = {x.product_description} discount = {x.product_discount} shop_name = {x.product_shop_name} status = {x.product_stock_status} address = {x.address} type = {params.type} email = {x.product_owner_email}></Cart></Col>)
                                 // console.log(x)
                             })
                         }

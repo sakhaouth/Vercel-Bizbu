@@ -9,7 +9,7 @@ import cookie from 'js-cookie';
 import Spinner from 'react-bootstrap/Spinner';
 import axios from 'axios';
 import { getCookies, setCookie, deleteCookie } from 'cookies-next';
-const SingIn = ({}) =>
+const UserSingIn = ({}) =>
 {
     // console.log('okkkkk')
     const PUBLIC = process.env.PUBLIC
@@ -19,7 +19,7 @@ const SingIn = ({}) =>
     const [data,setData] = useState({
         email : '',
         password : '',
-        type : 'owner'
+        type : 'user'
 
     })
     
@@ -47,18 +47,32 @@ const SingIn = ({}) =>
         // http://localhost:8000
         setLoading(true)
         const url = PUBLIC + '/bizbud/signin'
-        
+        // const url = LOCAL + '/bizbud/signin'
+        // const rawResponse  = await fetch(url, {
+        //     method: 'POST',
+        //     body: JSON.stringify(data),
+        //     credentials: "include",
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //       'Accept': 'application/json',
+        //     },
+        //     mode : 'cors'
+            
+            
+        //   })
+        console.log('here is cookie')
+        console.log(data)
         const rawResponse = axios.post(url,data,{withCredentials:true})
         const res = (await rawResponse).data
         // console.log('interesting value')
         // console.log(rawResponse.cookies)
         console.log('here is cookie')
-        console.log(getCookies())
+        console.log(data)
         //          to be opened
         if(res['status'] === 'ok')
         {
             console.log('completed')
-            Router.push({pathname : '/mainContainer',query: { type:'owner' }});
+            Router.push({pathname : '/mainContainer',query: { type:'user' }});
         }
         cookie.set('id',data.email,{expires : 1/24})
         console.log(res)
@@ -106,4 +120,4 @@ export async function getServerSideProps({req,res}) {
       props: {}, // will be passed to the page component as props
     }
   }
-export default SingIn
+export default UserSingIn

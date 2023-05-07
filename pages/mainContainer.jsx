@@ -24,7 +24,7 @@ const MainCOntainer = () =>
     console.log('container come')
     const router = useRouter()
     const info = router.query
-    console.log('what is my name ' + info.shop_name)
+    console.log('what is my name ' + info.type)
     const [showMenu,setShowMenu] = useState(false)
     const [who,setWho] = useState(0)
     const[outLoading,setOutLoading] = useState(false)
@@ -103,12 +103,13 @@ const MainCOntainer = () =>
                                     <Nav.Item onClick={orderHandle}>
                                         <Nav.Link><CartCheck></CartCheck> Order</Nav.Link>
                                     </Nav.Item>
-                                    <Nav.Item onClick={configHandle}>
+                                    
+                                    {info.type === 'owner' ? (<Nav.Item onClick={configHandle}>
                                         <Nav.Link><GearWide></GearWide> Config</Nav.Link>
-                                    </Nav.Item>
-                                    <Nav.Item onClick={addPostHandle}>
+                                    </Nav.Item>) : null}
+                                    {info.type === 'owner' ? (<Nav.Item onClick={addPostHandle}>
                                         <Nav.Link><HouseAdd></HouseAdd> Add Post</Nav.Link>
-                                    </Nav.Item>
+                                    </Nav.Item>) : null}
                                     <Nav.Item onClick={logHandle}>
                                        {!outLoading ? (<Nav.Link><BoxArrowLeft></BoxArrowLeft> Log out</Nav.Link>) : (<Spinner></Spinner>)}
                                     </Nav.Item>
@@ -136,8 +137,8 @@ const MainCOntainer = () =>
                 </Container>    
             </Navbar>
             <div className='final_main'>
-                {who === 0 ? <Home shop_name={info.shop_name}></Home>:null}
-                {who === 1 ? <Order></Order>:null}
+                {who === 0 ? <Home type = {info.type}></Home>:null}
+                {who === 1 ? <Order type = {info.type}></Order>:null}
                 {who === 2 ? <Config></Config>:null}
                 {who === 3 ? <AddPost></AddPost>:null}
                 {who === 4 ? <UserProfile></UserProfile>:null}

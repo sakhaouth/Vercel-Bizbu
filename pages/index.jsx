@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 import MainCOntainer from "./mainContainer"
 import { useCookies } from "react-cookie"
 import MySpinner from "./load"
-import Router from "next/router"
+import Router,{useRouter} from "next/router"
 // import PUBLIC from './values'
 // import LOCAL from './values'
 function Index()
@@ -44,10 +44,15 @@ function Index()
             
             // setShopName(info)
             // setValue(2)
-            console.log('hello')
-            console.log(res['object'])
-            // console.log(shopName.shop_name)
-            Router.push('/mainContainer');
+            // const router = useRouter();
+            // router.push({
+            // pathname: '/mainContainer',
+            // query: { type: res['object'], },
+            // });
+            // console.log('hello')
+            // console.log(res['object'])
+            // // console.log(shopName.shop_name)
+            Router.push({pathname : '/mainContainer',query: { type:res['object'] }});
 
         }
         else
