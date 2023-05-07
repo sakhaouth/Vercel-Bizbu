@@ -92,7 +92,7 @@ function Order(params)
                     <div className='order_holder'>
                     {
                         orders.map((x) => {
-                            return (<OrderView show = {1} buyer = {x.buyer_email} type = {params.type} shop_name = {x.shop_name} quantity = {x.quantity} prod_name = {x.product_name} discount = {x.total_discount} price = {x.total_price} req_date = {x.request_date} req_time = {x.request_time}> act_date = {x.action_date} act_time = {x.action_time}</OrderView>)
+                            return (<OrderView key="a" show = {1} buyer = {x.buyer_email} type = {params.type} shop_name = {x.shop_name} quantity = {x.quantity} prod_name = {x.product_name} discount = {x.total_discount} price = {x.total_price} req_date = {x.request_date} req_time = {x.request_time}> act_date = {x.action_date} act_time = {x.action_time}</OrderView>)
                                 // console.log(x)x.request_date
                         })
                     }
@@ -101,7 +101,7 @@ function Order(params)
                 <Tab eventKey="confirm" title = "Confirmed">
                     {
                         orders.map((x) => {
-                            return (<OrderView buyer = {x.buyer_email} show = {0} type = {params.type} shop_name = {x.shop_name} quantity = {x.quantity} prod_name = {x.product_name} discount = {x.total_discount} price = {x.total_price} req_date = {x.request_date} req_time = {x.request_time}> act_date = {x.action_date} act_time = {x.action_time} </OrderView>)
+                            return (<OrderView key='y' buyer = {x.buyer_email} show = {0} type = {params.type} shop_name = {x.shop_name} quantity = {x.quantity} prod_name = {x.product_name} discount = {x.total_discount} price = {x.total_price} req_date = {x.request_date} req_time = {x.request_time}> act_date = {x.action_date} act_time = {x.action_time} </OrderView>)
                                 // console.log(x)x.request_date
                         })
                     }
@@ -109,7 +109,7 @@ function Order(params)
                 <Tab eventKey="cancel" title = "Canceled">
                     {
                         orders.map((x) => {
-                            return (<OrderView buyer = {x.buyer_email} show = {0} type = {params.type} shop_name = {x.shop_name} quantity = {x.quantity} prod_name = {x.product_name} discount = {x.total_discount} price = {x.total_price} req_date = {x.request_date} req_time = {x.request_time}> act_date = {x.action_date} act_time = {x.action_time} </OrderView>)
+                            return (<OrderView key = 'z' buyer = {x.buyer_email} show = {0} type = {params.type} shop_name = {x.shop_name} quantity = {x.quantity} prod_name = {x.product_name} discount = {x.total_discount} price = {x.total_price} req_date = {x.request_date} req_time = {x.request_time}> act_date = {x.action_date} act_time = {x.action_time} </OrderView>)
                                 // console.log(x)x.request_date
                         })
                     }
