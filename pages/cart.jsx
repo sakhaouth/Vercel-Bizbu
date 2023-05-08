@@ -32,7 +32,9 @@ function Cart(props) {
         const url = PUBLIC + '/bizbud/productpic'
         const rawResponse = axios.get(url, {withCredentials:true,
             params: {
-              prod: props.name
+              prod: props.name,
+              shop : props.shop_name,
+              email : props.email
             },
             responseType: 'blob'
           })

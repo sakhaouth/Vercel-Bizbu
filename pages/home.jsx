@@ -46,6 +46,8 @@ function Home(params)
         
         // let url = 'http://localhost:8000/bizbud/getposts'
         let url = ''
+        console.log('just before')
+        console.log(params.type)
         if (params.type === 'user')
         {
             console.log('user typing')
@@ -72,8 +74,11 @@ function Home(params)
     
     useEffect(() => {
         
-        fu("")
-    },[])
+        if(params.type !== null)
+        {
+            fu("")
+        }
+    },[params])
     const onHitSearch = (e) =>
     {
         

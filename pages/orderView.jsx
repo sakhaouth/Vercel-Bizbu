@@ -65,7 +65,7 @@ function OrderView(params)
                     {show === true ? (<Row>
                         <Col><Button variant="secondary" onClick={confirm}>Confirm</Button></Col>
                         <Col><Button variant="danger" onClick={cancel}>Cancel</Button></Col>
-                    </Row>):'Action taken'}
+                    </Row>):(<b>Action taken</b>)}
                 </div>
                 ):null}
                 {loading ? (<Spinner animation="grow"></Spinner>):null}
