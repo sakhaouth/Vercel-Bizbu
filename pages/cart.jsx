@@ -3,10 +3,12 @@ import Card from 'react-bootstrap/Card';
 import {PencilFill,SendCheckFill} from 'react-bootstrap-icons'
 import Accordion from 'react-bootstrap/Accordion';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import Image from 'react-bootstrap/Image'
 import Spinner from 'react-bootstrap/Spinner';
 function Cart(props) {
     const [loading,setLoading] = useState(false)
+    const [imageFile,setImageFile] = useState(null)
     const PUBLIC = process.env.PUBLIC
     const makeRequest = async () =>
     {
@@ -25,10 +27,46 @@ function Cart(props) {
         console.log(res['status'])
         setLoading(false)
     }
+    const loadImage = async() => 
+    {
+        const url = PUBLIC + '/bizbud/productpic'
+        const rawResponse = axios.get(url, {withCredentials:true,
+            params: {
+              shop: props.shop_name,
+              prod: props.name
+            },
+            responseType: 'blob'
+          })
+        const res = (await rawResponse).data
+
+        console.log('image part')
+        console.log(res)
+        if (res === null)
+        {
+            console.log('no inamge')
+        }
+        else
+        {
+            const url = await URL.createObjectURL(res)
+            setImageFile(url)
+            console.log('ok')
+        }
+
+    }
+    useEffect(() => {
+        
+        loadImage()
+    },[])
   return (
     <div className='cartContainer'>
+        {/* <Image src={imageFile} alt='product_image' rounded thumbnail fluid></Image> */}
+        {/* <img src={imageFile} alt="Image description"></img> */}
         <Card>
-            <Card.Img variant="top" src="https://random.imagecdn.app/500/150" />
+            <Card.Img variant="top" src={imageFile} height='150 px' />
+            <div className='loader'>
+                {imageFile === null ? <Spinner></Spinner> : null}
+            </div>
+            
             <Card.Body>
                 <Card.Title>{props.name}</Card.Title>
                 <Card.Text>
@@ -41,7 +79,7 @@ function Cart(props) {
                     ):null}
                     <p>Price {props.price} Tk & discount {props.discount} Tk</p>
                     <p><b><i>Net Price</i></b> {props.price - props.discount} Tk</p> 
-                    <p>Stock Status : <b>{props.status}</b></p>
+                    <p>Stock Status : <b>{props.status === '1' ? "IN" : "OUT"}</b></p>
                 </Card.Text>
                 <Accordion>
                     <Accordion.Item eventKey="0">

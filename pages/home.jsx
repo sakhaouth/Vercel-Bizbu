@@ -20,6 +20,7 @@ function Home(params)
     const info = router.query
     console.log('here show -> '+ params.type)
     const [val,setVal] = useState('')
+    
     const onSearch = (e) =>
     {
         console.log(e.target.value)

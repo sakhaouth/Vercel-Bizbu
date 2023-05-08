@@ -7,6 +7,8 @@ import Alert from 'react-bootstrap/Alert';
 import Toast from 'react-bootstrap/Toast';
 import dynamic from 'next/dynamic'
 import Spinner from 'react-bootstrap/Spinner';
+import axios from 'axios';
+
 const AddPost = () =>
 {
     const PUBLIC = process.env.PUBLIC
@@ -21,6 +23,7 @@ const AddPost = () =>
     const [isMessage,setIsMessage] = useState(false)
     const [loading,setLoading] = useState(false)
     const [imageFile,setImageFile] = useState(null)
+    const [rowImage,setRowImae] = useState(null)
     const [preview, setPreview] = useState()
     const imageChangeHandle = (e) =>
     {
@@ -28,10 +31,27 @@ const AddPost = () =>
         {
             setImageFile(null)
         }
+        setRowImae(e.target.files[0])
         const objectUrl = URL.createObjectURL(e.target.files[0])
+        console.log('here image')
+        console.log(objectUrl)
         setImageFile(objectUrl)
         
         // console.log(e.target.files[0])
+    }
+    const saveImage = async () =>
+    {
+        const formData = new FormData()
+        formData.append('image',rowImage)
+        formData.append('prod',data["product_name"])
+        const url = PUBLIC + '/bizbud/productpic'
+        const rawResponse = axios.post(url,formData,{withCredentials:true,headers: {'Content-Type': 'multipart/form-data'}})
+        const res = (await rawResponse).data
+        console.log('image status')
+        console.log(res['status'])
+        setIsMessage(true)
+        setLoading(false)
+
     }
     const formHandle = async (e) =>{
         e.preventDefault();
@@ -69,13 +89,13 @@ const AddPost = () =>
         if (res['status'] === 'ok')
         {
             setMessage('Saved')
+            saveImage()
         }
         else
         {
             setMessage('Something wrong')
         }
-        setIsMessage(true)
-        setLoading(false)
+        
     }
     return(
         <>
@@ -84,7 +104,7 @@ const AddPost = () =>
                 <Image src={imageFile} alt='product_image' rounded thumbnail fluid></Image>
             </div>
             <div className="d-grid gap-2">
-                <Form onSubmit={formHandle}>
+                <Form onSubmit={formHandle} enctype="multipart/form-data">
                     <Form.Group controlId="formFile" className="mb-3">
                         <Form.Label>Choose product image</Form.Label>
                         <Form.Control type="file"  required onChange={imageChangeHandle}/>
