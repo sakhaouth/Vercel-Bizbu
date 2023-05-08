@@ -83,7 +83,7 @@ const UserSingIn = ({}) =>
     return(
         <div className='sign_in_container'>
             <div className='textPart'>
-                <b><span>Log In for Shop Owner</span></b>
+                <b><span>Log In for User</span></b>
             </div>
         <Form onSubmit={formSubmit}>
             <FloatingLabel

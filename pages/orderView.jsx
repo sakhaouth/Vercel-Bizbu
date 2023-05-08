@@ -9,6 +9,7 @@ function OrderView(params)
     
     const PUBLIC = process.env.PUBLIC
     const [loading,setLoading] = useState(false)
+    const [show,setShow] = useState(true)
     const confirm = async () =>
     {
         setLoading(true)
@@ -24,10 +25,11 @@ function OrderView(params)
         const rawResponse = axios.put(url,data,{withCredentials:true})
         const res = (await rawResponse).data
         console.log(res)
-        if (res['status'] !== 'ok')
+        if (res['status'] === 'ok')
         {
-            setLoading(false)
+            setShow(false)
         }
+        setLoading(false)
     }
     const cancel = async () => 
     {
@@ -44,10 +46,11 @@ function OrderView(params)
         const rawResponse = axios.put(url,data,{withCredentials:true})
         const res = (await rawResponse).data
         console.log(res)
-        if (res['status'] !== 'ok')
+        if (res['status'] === 'ok')
         {
-            setLoading(false)
+            setShow(false)
         }
+        setLoading(false)
     }
     console.log('here im')
     console.log(params.buyer)
@@ -59,10 +62,10 @@ function OrderView(params)
                 <p>Requested in <b>{params.req_date}</b> at <b>{params.req_time}</b> {params.status}</p>
                 {params.show === 1 & params.type === 'owner' & loading === false? (
                     <div className="action_button">
-                    <Row>
+                    {show === true ? (<Row>
                         <Col><Button variant="secondary" onClick={confirm}>Confirm</Button></Col>
                         <Col><Button variant="danger" onClick={cancel}>Cancel</Button></Col>
-                    </Row>
+                    </Row>):'Action taken'}
                 </div>
                 ):null}
                 {loading ? (<Spinner animation="grow"></Spinner>):null}

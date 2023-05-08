@@ -6,11 +6,13 @@ import { useState,useEffect } from 'react';
 import { Alert } from 'react-bootstrap';
 import Router from 'next/router';
 import Spinner from 'react-bootstrap/Spinner';
+import axios from 'axios';
 // import PUBLIC from './values';
 const SignUp = () =>
 {
     const PUBLIC = process.env.PUBLIC
     const [imageFile,setImageFile] = useState(null)
+    const [rowImage,setRowImae] = useState(null)
     const [message,setMessage] = useState()
     const [isMessage,setIsMessage] = useState(false)
     const [loading,setLoading] = useState(false)
@@ -23,7 +25,25 @@ const SignUp = () =>
         address : ''
 
     })
-    
+    const saveImage = async () =>
+    {
+        
+        const formData = new FormData()
+        formData.append('image',rowImage)
+        formData.append('email',data['email'])
+        formData.append('name',data['name'])
+        var rawResponse = null
+        var url = PUBLIC + '/bizbud/addpropic'
+        
+        
+        rawResponse = axios.post(url,formData,{withCredentials:true,headers: {'Content-Type': 'multipart/form-data'}})
+        const res = (await rawResponse).data
+        console.log('image status')
+        console.log(res['status'])
+        Router.push('/signIn')
+        
+
+    }
     const formSubmit = async(e) =>
     {
         // setIsLoading(true)
@@ -58,7 +78,8 @@ const SignUp = () =>
         if (res['status'] == 'ok')
         {
             console.log('I am')
-            Router.push('/signIn')
+            saveImage()
+            
         }
         else
         {
@@ -122,13 +143,14 @@ const SignUp = () =>
         } ))
         // console.log(data)
     }
+    
     const imageChangeHandle = (e) =>
     {
         if (!e.target.files[0])
         {
             setImageFile(null)
         }
-        
+        setRowImae(e.target.files[0])
         const objectUrl = URL.createObjectURL(e.target.files[0])
         setImageFile(objectUrl)
         
