@@ -27,7 +27,9 @@ const MainCOntainer = () =>
     console.log('what is my name ' + info.type)
     const [showMenu,setShowMenu] = useState(false)
     const [who,setWho] = useState(0)
-    const[outLoading,setOutLoading] = useState(false)
+    const [outLoading,setOutLoading] = useState(false)
+    const [prodEditType,setProdEditType] = useState(0)
+    const [product,setProduct] = useState(null)
     const menuHandle = () =>
     {
         setShowMenu(true)
@@ -50,6 +52,7 @@ const MainCOntainer = () =>
     const addPostHandle = (e) =>
     {
         setWho(3)
+        setProduct(null)
         setShowMenu(false)
     }
     const profileHandle = (e) =>
@@ -80,7 +83,13 @@ const MainCOntainer = () =>
         cookie.remove('id')
         setOutLoading(false)
     }
-    
+    const callBackfromHome = (product) =>
+    {
+        console.log('home')
+        setProduct(product)
+        setProdEditType(1)
+        setWho(3)
+    }
     return (
         <div>
             <Navbar bg='light' expand = 'lg' fixed='top'>
@@ -137,10 +146,10 @@ const MainCOntainer = () =>
                 </Container>    
             </Navbar>
             <div className='final_main'>
-                {who === 0 ? <Home type = {info.type}></Home>:null}
+                {who === 0 ? <Home type = {info.type} fu = {callBackfromHome}></Home>:null}
                 {who === 1 ? <Order type = {info.type}></Order>:null}
                 {who === 2 ? <Config></Config>:null}
-                {who === 3 ? <AddPost></AddPost>:null}
+                {who === 3 ? <AddPost product = {product}></AddPost>:null}
                 {who === 4 ? <UserProfile></UserProfile>:null}
             </div>
         </div>

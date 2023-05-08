@@ -20,7 +20,7 @@ function Cart(props) {
             owner_email : props.email,
             quntity : 1,
             discount : props.discount,
-            price : props.price
+            price : props.price,
         }
         const rawResponse = axios.post(url,post_data,{withCredentials:true})
         const res = (await rawResponse).data
@@ -32,7 +32,6 @@ function Cart(props) {
         const url = PUBLIC + '/bizbud/productpic'
         const rawResponse = axios.get(url, {withCredentials:true,
             params: {
-              shop: props.shop_name,
               prod: props.name
             },
             responseType: 'blob'
@@ -57,6 +56,19 @@ function Cart(props) {
         
         loadImage()
     },[])
+    const editHandler = () =>
+    {
+        const product = {
+            name:props.name,
+            price : props.price,
+            description : props.description,
+            discount : props.discount,
+            shop_name : props.shop_name,
+            status : props.status,
+            image : imageFile
+        }
+        props.fu(product)
+    }
   return (
     <div className='cartContainer'>
         {/* <Image src={imageFile} alt='product_image' rounded thumbnail fluid></Image> */}
@@ -94,7 +106,7 @@ function Cart(props) {
             {loading ? (<Spinner animation='grow'></Spinner>) : null}
             {props.type === 'user' ? (<Button variant="secondary" className='editButton' onClick={makeRequest}>Request <SendCheckFill></SendCheckFill></Button>) :
             null}
-            {props.type === 'owner' ? (<Button variant="secondary" className='editButton'><PencilFill></PencilFill> Edit</Button>) : null}
+            {props.type === 'owner' & imageFile !== null ? (<Button variant="secondary" onClick={editHandler} className='editButton'><PencilFill></PencilFill> Edit</Button>) : null}
             </Card.Body>
         </Card>
     </div>

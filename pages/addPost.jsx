@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic'
 import Spinner from 'react-bootstrap/Spinner';
 import axios from 'axios';
 
-const AddPost = () =>
+const AddPost = (props) =>
 {
     const PUBLIC = process.env.PUBLIC
     const [data,setData] = useState({
@@ -19,12 +19,14 @@ const AddPost = () =>
         "discount": null,
         "description":""
     })
+    
     const [message,setMessage] = useState()
     const [isMessage,setIsMessage] = useState(false)
     const [loading,setLoading] = useState(false)
     const [imageFile,setImageFile] = useState(null)
     const [rowImage,setRowImae] = useState(null)
     const [preview, setPreview] = useState()
+    var [reqMethodd,setMethod] = useState(null)
     const imageChangeHandle = (e) =>
     {
         if (!e.target.files[0])
@@ -41,11 +43,28 @@ const AddPost = () =>
     }
     const saveImage = async () =>
     {
+        console.log('image seve')
+        if(rowImage === null)
+        {
+            setIsMessage(true)
+            setLoading(false)
+            return
+        }
         const formData = new FormData()
         formData.append('image',rowImage)
         formData.append('prod',data["product_name"])
-        const url = PUBLIC + '/bizbud/productpic'
-        const rawResponse = axios.post(url,formData,{withCredentials:true,headers: {'Content-Type': 'multipart/form-data'}})
+        var rawResponse = null
+        var url = null 
+        if(props.product === null)
+        {
+            url = PUBLIC + '/bizbud/productpic'
+        }
+        else
+        {
+            url =  PUBLIC + '/bizbud/editproductpic'
+        }
+        
+        rawResponse = axios.post(url,formData,{withCredentials:true,headers: {'Content-Type': 'multipart/form-data'}})
         const res = (await rawResponse).data
         console.log('image status')
         console.log(res['status'])
@@ -64,6 +83,15 @@ const AddPost = () =>
             setIsMessage(true)
             return
         }
+        // const reqMethodd = 'POST'
+        if(props.product === null)
+        {
+            reqMethodd = 'POST'
+        }
+        else
+        {
+            reqMethodd = 'PUT'
+        }
         console.log('akhane acsei na')
         console.log(data['status'])
         setLoading(true)
@@ -71,7 +99,7 @@ const AddPost = () =>
         // const url = 'http://localhost:8000/bizbud/addpost'
         const url = PUBLIC + '/bizbud/addpost'
             const rawResponse  = await fetch(url, {
-            method: 'POST',
+            method: reqMethodd,
             body: JSON.stringify(data),
             credentials: 'include',
             headers: {
@@ -97,24 +125,41 @@ const AddPost = () =>
         }
         
     }
+     
+    useEffect( () => {
+    if (props.product !== null)
+    {
+        setData({
+        "product_name" : props.product.name,
+        "status":props.product.status,
+        "price" : props.product.price,
+        "discount": props.product.discount,
+        "description":props.product.description
+        })
+        setImageFile(props.product.image)
+        console.log('imagefile')
+        console.log(imageFile)
+        // loadImage()
+    }
+    },[])
     return(
-        <>
+        <div className='dekha'>
         <div className='add_post_container'>
             <div className="text-center" id='post_image' fluid>
                 <Image src={imageFile} alt='product_image' rounded thumbnail fluid></Image>
             </div>
-            <div className="d-grid gap-2">
+            <div>
                 <Form onSubmit={formHandle} enctype="multipart/form-data">
                     <Form.Group controlId="formFile" className="mb-3">
                         <Form.Label>Choose product image</Form.Label>
-                        <Form.Control type="file"  required onChange={imageChangeHandle}/>
+                        <Form.Control type="file" onChange={imageChangeHandle}/>
                     </Form.Group>
                     <FloatingLabel
                         controlId="floatingTextarea"
                         label="Product Name"
                         className="mb-3"
                     >
-                    <Form.Control value={data['product_name']} type='text' placeholder="product name" required onChange={(e) => {setData(prevData => ({...prevData,['product_name'] : e.target.value} ))}}/>
+                    <Form.Control value={data['product_name']} type='text' readOnly = {props.product !== null} placeholder="product name" required onChange={(e) => {setData(prevData => ({...prevData,['product_name'] : e.target.value} ))}}/>
                     </FloatingLabel>
                     
                     <FloatingLabel
@@ -148,7 +193,7 @@ const AddPost = () =>
                 </Form>
             </div>
         </div>
-        </>
+        </div>
     )
 }
 export default AddPost
