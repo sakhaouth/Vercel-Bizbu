@@ -93,6 +93,7 @@ const SingIn = ({}) =>
         </Form>
         <div className='forup'>
             <p>Are you new? <dev onClick={(e) => {Router.push('/signUp')}}><u>Sign up</u></dev> </p>
+            <p>Are you <dev onClick={(e) => {Router.push('/userSignIn')}}><u>User</u></dev> ?</p>
             
         </div>
         

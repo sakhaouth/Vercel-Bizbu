@@ -107,7 +107,7 @@ const UserSingIn = ({}) =>
         </Form>
         <div className='forup'>
             <p>Are you new? <dev onClick={(e) => {Router.push('/signUp')}}><u>Sign up</u></dev> </p>
-            
+            <p>Are you <dev onClick={(e) => {Router.push('/signIn')}}><u>Owner</u></dev> ?</p>
         </div>
         
     </div>
