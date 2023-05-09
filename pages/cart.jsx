@@ -12,6 +12,10 @@ function Cart(props) {
     const PUBLIC = process.env.PUBLIC
     const makeRequest = async () =>
     {
+        if(props.status === 0)
+        {
+            return
+        }
         setLoading(true)
         const url = PUBLIC + '/bizbud/executeproducts'
         const post_data = {
