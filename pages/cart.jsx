@@ -6,16 +6,22 @@ import axios from 'axios';
 import { useState,useEffect } from 'react';
 import Image from 'react-bootstrap/Image'
 import Spinner from 'react-bootstrap/Spinner';
+import Toast from 'react-bootstrap/Toast';
 function Cart(props) {
     const [loading,setLoading] = useState(false)
     const [imageFile,setImageFile] = useState(null)
     const PUBLIC = process.env.PUBLIC
+    const [message,setMessage] = useState("");
     const makeRequest = async () =>
     {
-        if(props.status === 0)
+        console.log('status')
+        console.log(props.status)
+        if(props.status !== 1)
         {
+            setMessage("Stock Out")
             return
         }
+        setMessage("")
         setLoading(true)
         const url = PUBLIC + '/bizbud/executeproducts'
         const post_data = {
@@ -109,6 +115,7 @@ function Cart(props) {
 
       
                 </Accordion>
+            {message !== "" ? (<p><b>{message}</b></p>):null}
             {loading ? (<Spinner animation='grow'></Spinner>) : null}
             {props.type === 'user' ? (<Button variant="secondary" className='editButton' onClick={makeRequest}>Request <SendCheckFill></SendCheckFill></Button>) :
             null}
