@@ -121,7 +121,9 @@ const AddPost = (props) =>
         }
         else
         {
-            setMessage('Something wrong')
+            setMessage(res['object'])
+            setLoading(false)
+            setIsMessage(true)
         }
         
     }

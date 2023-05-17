@@ -57,7 +57,7 @@ function OrderView(params)
     return(
         <div className="order_view">
             <div className="inner">
-                <p><b>{params.type === 'user'?"You are":params.buyer }</b> requsetesting in <b>{params.shop_name}</b> for {params.quantity} <b>{params.prod_name} </b></p>
+                <p><b>{params.type === 'user'?"You are":params.buyer }</b> requesting in <b>{params.shop_name}</b> for {params.quantity} <b>{params.prod_name} </b></p>
                 <p>Total discount is <b>{params.discount}</b> and net price is <b>{params.price}</b>  </p>
                 <p>Requested in <b>{params.req_date}</b> at <b>{params.req_time}</b> {params.status}</p>
                 {params.show === 1 & params.type === 'owner' & loading === false? (

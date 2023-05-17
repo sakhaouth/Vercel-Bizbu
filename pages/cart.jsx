@@ -86,7 +86,7 @@ function Cart(props) {
         {/* <Image src={imageFile} alt='product_image' rounded thumbnail fluid></Image> */}
         {/* <img src={imageFile} alt="Image description"></img> */}
         <Card>
-            <Card.Img variant="top" src={imageFile} height='150 px' />
+            <Card.Img variant="top" src={imageFile} height='200 px' />
             <div className='loader'>
                 {imageFile === null ? <Spinner></Spinner> : null}
             </div>
