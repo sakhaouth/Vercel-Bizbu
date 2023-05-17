@@ -16,7 +16,7 @@ function Cart(props) {
     {
         console.log('status')
         console.log(props.status)
-        if(props.status !== 1)
+        if(props.status !== "1")
         {
             setMessage("Stock Out")
             return
