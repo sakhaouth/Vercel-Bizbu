@@ -119,10 +119,10 @@ function Home(params)
                 {isLoading ? <Spinner animation='grow'></Spinner>:null}
                 </div>
                 <Container fluid>
-                    <Row className="justify-content-md-center" lg={4} id="productRow">
+                    <Row className="justify-content-md-center" sm={12} md={6} lg={4} id="productRow">
                         {
-                            post.map((x) => {
-                                return (<Col key = {x.product_name}><Cart fu = {callBackFunctin} name = {x.product_name} price = {x.product_price} description = {x.product_description} discount = {x.product_discount} shop_name = {x.product_shop_name} status = {x.product_stock_status} address = {x.address} type = {params.type} email = {x.product_owner_email}></Cart></Col>)
+                            post.map((x,i) => {
+                                return (<Col key = {i}><Cart fu = {callBackFunctin} name = {x.product_name} price = {x.product_price} description = {x.product_description} discount = {x.product_discount} shop_name = {x.product_shop_name} status = {x.product_stock_status} address = {x.address} type = {params.type} email = {x.product_owner_email}></Cart></Col>)
                                 // console.log(x)
                             })
                         }

@@ -65,10 +65,10 @@ function OrderView(params)
                     {show === true ? (<Row>
                         <Col><Button variant="secondary" onClick={confirm}>Confirm</Button></Col>
                         <Col><Button variant="danger" onClick={cancel}>Cancel</Button></Col>
-                    </Row>):(<b>Action taken</b>)}
+                    </Row>):(<div className="cart_text">Action taken</div>)}
                 </div>
                 ):null}
-                {loading ? (<Spinner animation="grow"></Spinner>):null}
+                {loading ? (<div className="new_loader"><Spinner animation="grow"></Spinner></div>):null}
             </div>
         </div>
     )

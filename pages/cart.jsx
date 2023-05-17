@@ -35,6 +35,7 @@ function Cart(props) {
         const rawResponse = axios.post(url,post_data,{withCredentials:true})
         const res = (await rawResponse).data
         console.log(res['status'])
+        setMessage('Requested')
         setLoading(false)
     }
     const loadImage = async() => 
@@ -85,7 +86,9 @@ function Cart(props) {
     <div className='cartContainer'>
         {/* <Image src={imageFile} alt='product_image' rounded thumbnail fluid></Image> */}
         {/* <img src={imageFile} alt="Image description"></img> */}
-        <Card>
+        <Card
+        bg="light"
+        >
             <Card.Img variant="top" src={imageFile} height='200 px' />
             <div className='loader'>
                 {imageFile === null ? <Spinner></Spinner> : null}
@@ -115,8 +118,12 @@ function Cart(props) {
 
       
                 </Accordion>
-            {message !== "" ? (<p><b>{message}</b></p>):null}
-            {loading ? (<Spinner animation='grow'></Spinner>) : null}
+            <div className='cart_text'>
+                {message !== "" ? (<p><b>{message}</b></p>):null}
+            </div>
+            <div className='new_loader'>
+                {loading ? (<Spinner animation='grow'></Spinner>) : null}
+            </div>
             {props.type === 'user' ? (<Button variant="secondary" className='editButton' onClick={makeRequest}>Request <SendCheckFill></SendCheckFill></Button>) :
             null}
             {props.type === 'owner' & imageFile !== null ? (<Button variant="secondary" onClick={editHandler} className='editButton'><PencilFill></PencilFill> Edit</Button>) : null}
