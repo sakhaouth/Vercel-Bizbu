@@ -3,8 +3,8 @@ const nextConfig = {
   reactStrictMode: true,
   env :
   {
-    PUBLIC : 'http://localhost:8000'
-    // PUBLIC : 'https://api-bizbud.onrender.com'
+    // PUBLIC : 'http://localhost:8000'
+    PUBLIC : 'https://api-bizbud.onrender.com'
   },
 }
 
